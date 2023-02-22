@@ -2,3 +2,14 @@
 .ipynb_checkpoints/
 
 _pycache_/
+wandb
+vrp_data
+output
+outputs
+data
+vrp_data_large
+tsp_data_large
+nets
+*.pt
+train_HARD.ipynb
+

@@ -4,12 +4,11 @@ import scipy.spatial
 
 DEPOT_TOKEN = 100
 
-def generate_random_instance(num_nodes=20, grid=(1000, 1000), p=2):
+def generate_random_instance(num_nodes=20, grid=(1000,1000)):
     """Generates a random instance of the VRP.
 
     Args:
         n_nodes : Number of nodes in the VRP graph.
-        grid : Tuple defining the grid of possible coordinate values.
         p : The p-norm used as the distance measure between coordinates. Default
             is 2-norm (Euclidean).
 
@@ -17,28 +16,28 @@ def generate_random_instance(num_nodes=20, grid=(1000, 1000), p=2):
         coords of shape (n_nodes, 2) : The coordinates of the nodes
         dist_mat of shape (n_nodes, n_nodes) : Distance matrix
     """
-    x_range = range(grid[0])
-    y_range = range(grid[1])
-
-    x_sample = random.sample(x_range, num_nodes)
-    y_sample = random.sample(y_range, num_nodes)
+    x_sample = random.sample(range(grid[0]), num_nodes)
+    y_sample = random.sample(range(grid[1]), num_nodes)
 
     coords = list(zip(x_sample, y_sample))
+    dist_mat = get_distance_matrix(coords)
 
-    dist_mat = scipy.spatial.distance_matrix(coords, coords, p=p).round().astype(int)
     return coords, dist_mat
 
-def create_data_model(num_nodes=20, num_vehicles=5):
+def get_distance_matrix(coords, p=2):
+    return scipy.spatial.distance_matrix(coords, coords, p=p)
+
+def create_data_model(num_nodes=20, num_vehicles=5, augment=False):
     """Stores the data for the problem."""
     data = {}
     coords, data['distance_matrix'] = generate_random_instance(num_nodes=num_nodes)
-    tokens = np.zeros((len(coords), 1), dtype=int)
-    tokens[0] = DEPOT_TOKEN
-    inputs = np.concatenate((coords, tokens), axis=1)
+    # ---------- remove tokens bc in TSP it does not matter where is the depot---------
+    # tokens = np.zeros((len(coords), 1), dtype=int)
+    # tokens[0] = DEPOT_TOKEN
+    # inputs = np.concatenate((coords, tokens), axis=1) # inputs - node features[coordinates (x,y), token]
     data['num_vehicles'] = num_vehicles
     data['depot'] = 0
-    return inputs, data
-
+    return coords, data
 
 def print_solution(data, manager, routing, solution):
     """Prints solution on console."""
