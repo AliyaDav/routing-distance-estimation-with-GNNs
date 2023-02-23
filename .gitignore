@@ -12,4 +12,6 @@ tsp_data_large
 nets
 *.pt
 train_HARD.ipynb
+.hypothesis
+.DS_Store
 

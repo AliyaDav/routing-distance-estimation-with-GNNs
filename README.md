@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # VRPNet
 
 This is the codebase for my Master's thesis "Prediction of route distances for the Vehicle Routing Problem using Graph Neural Networks".
@@ -26,3 +27,7 @@ To run the code, you need to make sure you have the following python libraries i
 * Matplotlib
 * Pickle
 * ortools
+=======
+# routing-distance-estimation-with-GNNs
+The code base for the Master thesis "Prediction of route distances for the Vehicle Routing Problem using Graph Neural Networks"
+>>>>>>> df4ec63e8dc15328bca9eb8d67fb8171586427ac
